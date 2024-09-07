@@ -6,7 +6,7 @@ libs = ["lib"]
 
 remappings = [
     "@openzeppelin/=lib/openzeppelin-contracts/", 
-    "ENSMetadataStandard=lib/ENSMetadataStandard/src/"
+    "ENSMetadataStandard/=lib/ens-metadata-standard/src/"
 ]
 
 # Include more configuration options here
