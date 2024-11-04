@@ -17,7 +17,12 @@ contract MyToken is ERC20, ERC20Permit, ENSMetadata {
         )
     {}
     // Function to trigger ENS verification
-    function triggerENSVerification() public onlyOwner returns (bool) {
+    function triggerENSVerification()
+        public
+        onlyOwner
+        context("ENSVerification")
+        returns (bool)
+    {
         return verifyENS();
     }
 }
