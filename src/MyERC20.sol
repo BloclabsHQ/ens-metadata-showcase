@@ -4,14 +4,12 @@ pragma solidity ^0.8.20;
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {ERC20Permit} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
-import {Pausable} from "@openzeppelin/contracts/security/Pausable.sol";
+import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {ENSMetadata} from "ENSMetadataStandard/ENSMetadata.sol";
-import {MetadataLib} from "./MetadataLib.sol";
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract MyToken is ERC20, ERC20Permit, Pausable, Ownable, ENSMetadata {
-    using MetadataLib for MetadataLib.Metadata;
-
     constructor(
         address _ensRegistry
     )
@@ -24,17 +22,6 @@ contract MyToken is ERC20, ERC20Permit, Pausable, Ownable, ENSMetadata {
             _ensRegistry
         )
     {}
-
-    // Function to trigger ENS verification
-    // Verifies the ENS metadata associated with the contract to ensure authenticity
-    function triggerENSVerification()
-        public
-        onlyOwner
-        withContext("ENS verification triggered by the owner")
-        returns (bool)
-    {
-        return verifyENS();
-    }
 
     // Minting function to create new tokens
     // Allows the owner to mint additional tokens, increasing the total supply
@@ -71,29 +58,6 @@ contract MyToken is ERC20, ERC20Permit, Pausable, Ownable, ENSMetadata {
         withContext("Unpausing token transfers by the owner")
     {
         _unpause();
-    }
-
-    // Override _beforeTokenTransfer to integrate Pausable functionality
-    // This ensures that token transfers are blocked when the contract is paused
-    function _beforeTokenTransfer(
-        address from,
-        address to,
-        uint256 amount
-    ) internal override(ERC20) whenNotPaused {
-        super._beforeTokenTransfer(from, to, amount);
-    }
-
-    // Function to recover tokens accidentally sent to this contract
-    // Allows the owner to retrieve any ERC20 tokens mistakenly sent to the contract
-    function recoverERC20(
-        address tokenAddress,
-        uint256 tokenAmount
-    )
-        public
-        onlyOwner
-        withContext("Recovering mistakenly sent tokens by the owner")
-    {
-        IERC20(tokenAddress).transfer(owner(), tokenAmount);
     }
 
     // Function to renounce ownership
