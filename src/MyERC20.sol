@@ -10,9 +10,7 @@ import {ENSMetadata} from "ENSMetadataStandard/ENSMetadata.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract MyToken is ERC20, ERC20Permit, Pausable, Ownable, ENSMetadata {
-    constructor(
-        address _ensRegistry
-    )
+    constructor(address _ensRegistry)
         ERC20("MyToken", "MTK")
         ERC20Permit("MyToken")
         ENSMetadata(
@@ -21,53 +19,36 @@ contract MyToken is ERC20, ERC20Permit, Pausable, Ownable, ENSMetadata {
             "worldtokenproject.eth",
             _ensRegistry
         )
+        Ownable(msg.sender)
     {}
 
     // Minting function to create new tokens
     // Allows the owner to mint additional tokens, increasing the total supply
-    function mint(
-        address to,
-        uint256 amount
-    ) public onlyOwner withContext("Minting new tokens by the owner") {
+    function mint(address to, uint256 amount) public onlyOwner {
         _mint(to, amount);
     }
 
     // Burning function to reduce the total supply
     // Allows a token holder to burn their tokens, decreasing the total supply
-    function burn(
-        uint256 amount
-    ) public withContext("Burning tokens by the holder") {
+    function burn(uint256 amount) public {
         _burn(msg.sender, amount);
     }
 
     // Pausable function to stop all transfers temporarily
     // Allows the owner to pause token transfers in case of an emergency
-    function pause()
-        public
-        onlyOwner
-        withContext("Pausing token transfers by the owner")
-    {
+    function pause() public onlyOwner {
         _pause();
     }
 
     // Unpause function to resume transfers
     // Allows the owner to resume token transfers once the emergency is resolved
-    function unpause()
-        public
-        onlyOwner
-        withContext("Unpausing token transfers by the owner")
-    {
+    function unpause() public onlyOwner {
         _unpause();
     }
 
     // Function to renounce ownership
     // Allows the owner to renounce ownership, making the contract ownerless and removing centralized control
-    function renounceOwnership()
-        public
-        override
-        onlyOwner
-        withContext("Renouncing ownership by the owner")
-    {
+    function renounceOwnership() public override onlyOwner {
         super.renounceOwnership();
     }
 }
