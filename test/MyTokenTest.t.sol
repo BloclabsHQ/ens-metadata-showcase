@@ -20,8 +20,7 @@ contract MyTokenTest is Test {
     uint256 public constant BURN_AMOUNT = 200 * 1e18;
 
     string public constant METADATA_TITLE = "The World Token Project";
-    string public constant METADATA_DESCRIPTION =
-        "This token is for the world token project";
+    string public constant METADATA_DESCRIPTION = "This token is for the world token project";
     string public constant METADATA_ENS_NAME = "worldtokenproject.eth";
 
     function setUp() public {
@@ -42,20 +41,12 @@ contract MyTokenTest is Test {
 
     function testMetadataInitialization() public view {
         // Fetch the metadata
-        (
-            string memory title,
-            string memory description,
-            string memory ENS_name,
-            bool verification
-        ) = myToken.getMetadata();
+        (string memory title, string memory description, string memory ENS_name, bool verification) =
+            myToken.getMetadata();
 
         // Assertions
         assertEq(title, METADATA_TITLE, "Metadata title mismatch");
-        assertEq(
-            description,
-            METADATA_DESCRIPTION,
-            "Metadata description mismatch"
-        );
+        assertEq(description, METADATA_DESCRIPTION, "Metadata description mismatch");
         assertEq(ENS_name, METADATA_ENS_NAME, "Metadata ENS name mismatch");
         assertFalse(verification, "Verification should initially be false");
     }
@@ -69,11 +60,8 @@ contract MyTokenTest is Test {
         assertTrue(verification, "ENS verification failed");
 
         // Fetch updated metadata
-        (, , , bool updatedVerification) = myToken.getMetadata();
-        assertTrue(
-            updatedVerification,
-            "Verification status not updated in metadata"
-        );
+        (,,, bool updatedVerification) = myToken.getMetadata();
+        assertTrue(updatedVerification, "Verification status not updated in metadata");
     }
 
     function test_RevertIf_UnauthorizedVerification() public {
@@ -82,6 +70,4 @@ contract MyTokenTest is Test {
         vm.expectRevert("Caller is not the owner of the ENS name");
         myToken.verifyENS();
     }
-
-   
 }
