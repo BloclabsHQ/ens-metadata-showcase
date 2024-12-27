@@ -3,8 +3,8 @@ pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
 import "../src/MyERC20.sol";
-import "ens-metadata-standard/test/utils/mockEnsRegistry.t.sol"; // Import the mock
-import "ens-metadata-standard/test/utils/mockENSResolver.t.sol";
+import "ens-metadata-standard/test/utils/MockEnsRegistry.t.sol"; // Import the mock
+import "ens-metadata-standard/test/utils/MockENSResolver.t.sol";
 import "ens-metadata-standard/src/ENSVerificationLib.sol";
 
 contract MyTokenTest is Test {
