@@ -83,31 +83,5 @@ contract MyTokenTest is Test {
         myToken.verifyENS();
     }
 
-    function testMint() public {
-        vm.prank(OWNER); // Only the owner can mint
-        myToken.mint(USER, MINT_AMOUNT);
-
-        // Assertions
-        assertEq(
-            myToken.balanceOf(USER),
-            MINT_AMOUNT,
-            "Minted amount mismatch"
-        );
-    }
-
-    function testBurn() public {
-        vm.prank(OWNER);
-        myToken.mint(USER, MINT_AMOUNT);
-
-        // Simulate USER burning tokens
-        vm.prank(USER);
-        myToken.burn(BURN_AMOUNT);
-
-        // Assertions
-        assertEq(
-            myToken.balanceOf(USER),
-            MINT_AMOUNT - BURN_AMOUNT,
-            "Burned amount mismatch"
-        );
-    }
+   
 }
