@@ -18,7 +18,9 @@ contract MyToken is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable, ENSMeta
             "ENS Metadata NFT",
             "An example NFT contract showcasing ENS metadata integration",
             "ensmetadatanft.eth",
-            ensRegistry
+            ensRegistry,
+            new string[](0), // Empty array for social media links
+            ""  // Empty string for external data URI
         )
     {}
 

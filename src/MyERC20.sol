@@ -17,7 +17,9 @@ contract MyToken is ERC20, ERC20Permit, Pausable, Ownable, ENSMetadata {
             "The World Token Project",
             "This token is for the world token project",
             "worldtokenproject.eth",
-            _ensRegistry
+            _ensRegistry,
+            new string[](0), // Empty array for social media links
+            ""  // Empty string for external data URI
         )
         Ownable(msg.sender)
     {}
